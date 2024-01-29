@@ -75,11 +75,6 @@ exports.loginUser = async (req, res) => {
     }
 }
 
-exports.getUser = async (req, res) => {
-    console.log("------------get-------------");
-    res.json("getting user");
-}
-
 exports.resetPasswordRequest = async (req, res) => {
     console.log("------------RESET PASSWORD REQUEST-------------");
     console.log(req.body.email);

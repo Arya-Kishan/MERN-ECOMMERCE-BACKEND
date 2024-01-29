@@ -60,6 +60,13 @@ server.post('/create-checkout-session', async (req, res) => {
 
 
 
+server.post("/upload", (req, res) => {
+  const file = (req?.files.photos);
+  console.log(file);
+  res.status(200).json({ "message": "UPLOADING" })
+})
+
+
 server.use("/", (req, res) => {
   res.status(400).json({ "message": "NORMAL ROUTE" })
 })
