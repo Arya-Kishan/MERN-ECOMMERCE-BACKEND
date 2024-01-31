@@ -10,6 +10,7 @@ const orderRouter = require("./routes/OrderRoute")
 const categoryRouter = require("./routes/CategoryRoute")
 const brandRouter = require("./routes/BrandRoute")
 const reviewRouter = require("./routes/ProductReviewRoute")
+const wishlistRouter = require("./routes/WishlistRoute")
 const path = require("path");
 const stripe = require("stripe")('sk_test_51OTSOaSCLk89VVV2rKVOHYuhtVhatr42Idu62Nn2xa0Pr3Fsee5JL687eoWbCAkaU7DAMKXrSUkpvjmkcpuWyw2U00ZIT6Ag03');
 
@@ -30,6 +31,7 @@ server.use("/order", orderRouter)
 server.use("/categories", categoryRouter)
 server.use("/brands", brandRouter)
 server.use("/review", reviewRouter)
+server.use("/wishlist", wishlistRouter)
 // PAYMENT INTEGRATION
 server.post('/create-checkout-session', async (req, res) => {
 

@@ -31,7 +31,7 @@ exports.getAllProducts = async (req, res) => {
         query = query.find({ $and: [{ category: req.query.category }, { brand: req.query.brand }] });
     }
 
-    if (req.query.sort && req.query.order) {
+    if (req.query.sort && req.query.order && req.query.sort !== 'undefined') {
         query = query.find().sort({ [req.query.sort]: req.query.order });
     }
 

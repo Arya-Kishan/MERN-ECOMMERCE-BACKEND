@@ -71,6 +71,10 @@
             "dest": "index.js"
         },
         {
+            "src": "/wishlist/(.*)",
+            "dest": "index.js"
+        },
+        {
             "src": "/",
             "dest": "dist/index.html"
         },
