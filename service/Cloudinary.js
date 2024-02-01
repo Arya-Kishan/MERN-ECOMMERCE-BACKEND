@@ -6,9 +6,9 @@ const storage = multer.memoryStorage();
 exports.SingleUpload = multer({ storage }).single("photo")
 
 cloudinary.config({
-    cloud_name: 'dwvuqahw2',
-    api_key: '563441375781984',
-    api_secret: 'x2dEVPTIwie3i9dBNG2-wyCMz1Y'
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_KEY,
+    api_secret: process.env.CLOUD_SECRET
 });
 
 exports.getUrl = async (file) => {
@@ -36,7 +36,7 @@ exports.getUrl = async (file) => {
                 let result = await streamUpload(file);
                 return result.secure_url;
             }
-            
+
             return upload(file);
         }
     } catch (error) {
