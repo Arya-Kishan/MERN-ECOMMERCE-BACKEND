@@ -18,6 +18,7 @@ exports.getCartByUserId = async (req, res) => {
 
     try {
         const { id } = req.params;
+        console.log(id);
         const doc = await Cart.find({ userId: id }).populate('itemId');
         res.status(200).json(doc);
     } catch (error) {
