@@ -67,7 +67,7 @@
             "dest": "index.js"
         },
         {
-            "src": "/brands/(.*)",
+            "src": "/count/(.*)",
             "dest": "index.js"
         },
         {

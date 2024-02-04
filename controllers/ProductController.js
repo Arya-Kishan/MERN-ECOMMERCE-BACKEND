@@ -1,11 +1,20 @@
 const { query } = require("express");
-const { Product } = require("../models/Product")
+const { Product } = require("../models/Product");
+const { getUrl } = require("../service/Cloudinary");
 
 exports.createProduct = async (req, res) => {
 
-    const product = new Product(req.body);
-
     try {
+        let urlArr = [];
+        for (let file in req.files) {
+            let url = await getUrl(req.files[file][0])
+            urlArr.push(url);
+        }
+        console.log(urlArr);
+        let body = { ...req.body, thumbnail: urlArr[0], images: [urlArr[1], urlArr[2], urlArr[3]] }
+        console.log(body);
+
+        const product = new Product(body);
         const doc = await product.save();
         res.status(200).json(doc);
     } catch (error) {

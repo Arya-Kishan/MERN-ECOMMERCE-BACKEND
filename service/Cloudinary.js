@@ -4,6 +4,7 @@ const streamifier = require("streamifier")
 
 const storage = multer.memoryStorage();
 exports.SingleUpload = multer({ storage }).single("photo")
+exports.multiUploads = multer({ storage }).fields([{ name: "thumbnail" }, { name: "image1" }, { name: "image2" }, { name: "image3" }])
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,

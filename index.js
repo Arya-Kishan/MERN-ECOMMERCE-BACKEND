@@ -3,6 +3,7 @@ const cors = require('cors');
 const PORT = process.env.PORT || 8080
 require('dotenv').config()
 require('./mongoDB')
+const cookieParser = require("cookie-parser")
 const userRouter = require("./routes/UserRoute")
 const productRouter = require("./routes/ProductRoute")
 const cartRouter = require("./routes/CartRoute")
@@ -11,6 +12,7 @@ const categoryRouter = require("./routes/CategoryRoute")
 const brandRouter = require("./routes/BrandRoute")
 const reviewRouter = require("./routes/ProductReviewRoute")
 const wishlistRouter = require("./routes/WishlistRoute")
+const countRouter = require("./routes/CountRoutes")
 const path = require("path");
 const stripe = require("stripe")('sk_test_51OTSOaSCLk89VVV2rKVOHYuhtVhatr42Idu62Nn2xa0Pr3Fsee5JL687eoWbCAkaU7DAMKXrSUkpvjmkcpuWyw2U00ZIT6Ag03');
 
@@ -18,6 +20,7 @@ const server = express();
 
 
 server.use(cors());
+server.use(cookieParser());
 server.use(express.json());
 server.use(express.static(path.join(__dirname, 'dist')));
 
@@ -32,6 +35,7 @@ server.use("/categories", categoryRouter)
 server.use("/brands", brandRouter)
 server.use("/review", reviewRouter)
 server.use("/wishlist", wishlistRouter)
+server.use("/count", countRouter)
 // PAYMENT INTEGRATION
 server.post('/create-checkout-session', async (req, res) => {
 
@@ -59,6 +63,14 @@ server.post('/create-checkout-session', async (req, res) => {
   res.json({ id: session.id });
 
 });
+
+
+
+server.post("/upload", (req, res) => {
+  const file = (req?.files.photos);
+  console.log(file);
+  res.status(200).json({ "message": "UPLOADING" })
+})
 
 
 server.use("/", (req, res) => {

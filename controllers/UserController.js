@@ -29,6 +29,21 @@ exports.getUserById = async (req, res) => {
     }
 }
 
+// FETCHING ALL USERS FOR ADMIN
+exports.getAllUser = async (req, res) => {
+
+    console.log("-------GET ALL USERS----------");
+
+    try {
+        const user = await User.find();
+        res.status(200).json(user);
+    } catch (error) {
+        console.log("ERROR IN GETTING ALL USER");
+        console.log(error);
+        res.status(400).json({ 'message': 'Error in ALL user' });
+    }
+}
+
 exports.updateUserById = async (req, res) => {
 
     const { id } = req.params;
@@ -61,9 +76,10 @@ exports.loginUser = async (req, res) => {
     console.log("------------login-------------");
     try {
         const user = await User.findOne({ email: req.body.email })
+        console.log(req?.cookies);
 
         if (user.password == req.body.password) {
-            res.status(200).json(user)
+            res.status(200).cookie("jwt", "1234", { expires: new Date(Date.now() + 900000), httpOnly: true }).json(user)
         } else {
             res.status(400).json({ message: "PASSWORD INCORRECT" })
         }

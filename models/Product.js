@@ -10,7 +10,8 @@ const productSchema = mongoose.Schema({
     brand: String,
     category: String,
     thumbnail: String,
-    images: [String]
+    images: [String],
+    date: { type: Date, default: Date.now }
 })
 
 exports.Product = mongoose.model("Product", productSchema)
