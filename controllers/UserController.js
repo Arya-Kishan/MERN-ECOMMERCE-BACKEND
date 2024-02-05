@@ -1,10 +1,13 @@
 const { User } = require("../models/User");
 const { sendMail } = require("../service/NodeMailer");
 const crypto = require("crypto")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 exports.createUser = async (req, res) => {
-    const user = new User(req.body);
     try {
+        let hashPassword = await bcrypt.hash(req.body.password, 10)
+        const user = new User({ ...req.body, password: hashPassword });
         const newUser = await user.save();
         res.status(200).json(newUser);
     } catch (error) {
@@ -79,8 +82,13 @@ exports.loginUser = async (req, res) => {
         const user = await User.findOne({ email: req.body.email })
         console.log(req?.cookies);
 
-        if (user.password == req.body.password) {
-            res.status(200).cookie("jwt", "1234", { expires: new Date(Date.now() + 900000), httpOnly: true }).json(user)
+        let token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "600000s" });
+
+        let verifyPassword = await bcrypt.compare(req.body.password, user.password)
+        console.log(verifyPassword);
+
+        if (verifyPassword) {
+            res.status(200).cookie("jwt", token, { expires: new Date(Date.now() + 60000*10), httpOnly: true }).json(user)
         } else {
             res.status(400).json({ message: "PASSWORD INCORRECT" })
         }

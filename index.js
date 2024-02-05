@@ -13,13 +13,18 @@ const brandRouter = require("./routes/BrandRoute")
 const reviewRouter = require("./routes/ProductReviewRoute")
 const wishlistRouter = require("./routes/WishlistRoute")
 const countRouter = require("./routes/CountRoutes")
+const authRouter = require("./routes/AuthRoutes")
 const path = require("path");
+const bcrypt = require('bcrypt');
 const stripe = require("stripe")('sk_test_51OTSOaSCLk89VVV2rKVOHYuhtVhatr42Idu62Nn2xa0Pr3Fsee5JL687eoWbCAkaU7DAMKXrSUkpvjmkcpuWyw2U00ZIT6Ag03');
 
 const server = express();
 
 
-server.use(cors());
+server.use(cors({
+  origin:["http://localhost:5173","https://my-mern-ecommerce.vercel.app"],
+  credentials:true
+}));
 server.use(cookieParser());
 server.use(express.json());
 server.use(express.static(path.join(__dirname, 'dist')));
@@ -27,6 +32,7 @@ server.use(express.static(path.join(__dirname, 'dist')));
 
 
 
+server.use("/auth", authRouter)
 server.use("/user", userRouter)
 server.use("/product", productRouter)
 server.use("/cart", cartRouter)
@@ -71,7 +77,6 @@ server.post("/upload", (req, res) => {
   console.log(file);
   res.status(200).json({ "message": "UPLOADING" })
 })
-
 
 server.use("/", (req, res) => {
   res.status(400).json({ "message": "NORMAL ROUTE" })
