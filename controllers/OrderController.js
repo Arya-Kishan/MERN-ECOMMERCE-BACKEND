@@ -73,6 +73,19 @@ exports.updateOrderStatusById = async (req, res) => {
     }
 }
 
+exports.deleteOrderById = async (req, res) => {
+
+    try {
+        const { id } = req.params;
+        const doc = await Order.findByIdAndDelete(id);
+        res.status(200).json({ data: doc, message: "Success" });
+    } catch (error) {
+        console.log("ERROR IN DELETING ORDER");
+        console.log(error);
+        res.status(400).json({ data: null, message: "Fail" });
+    }
+}
+
 
 exports.mailOrderReceipt = async (req, res) => {
     console.log("------------MAIL ORDER RECEIPT-------------");
