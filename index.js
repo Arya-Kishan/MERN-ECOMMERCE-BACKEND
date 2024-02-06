@@ -22,8 +22,8 @@ const server = express();
 
 
 server.use(cors({
-  origin:["http://localhost:5173","https://my-mern-ecommerce.vercel.app"],
-  credentials:true
+  origin: ["http://localhost:5173", "https://heroic-twilight-9e84af.netlify.app"],
+  credentials: true
 }));
 server.use(cookieParser());
 server.use(express.json());
