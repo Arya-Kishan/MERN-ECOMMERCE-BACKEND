@@ -21,10 +21,7 @@ const stripe = require("stripe")('sk_test_51OTSOaSCLk89VVV2rKVOHYuhtVhatr42Idu62
 const server = express();
 
 
-server.use(cors({
-  origin: ["http://localhost:5173", "https://heroic-twilight-9e84af.netlify.app"],
-  credentials: true
-}));
+server.use(cors());
 server.use(cookieParser());
 server.use(express.json());
 server.use(express.static(path.join(__dirname, 'dist')));

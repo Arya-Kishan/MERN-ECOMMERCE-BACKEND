@@ -88,7 +88,7 @@ exports.loginUser = async (req, res) => {
         console.log(verifyPassword);
 
         if (verifyPassword) {
-            res.status(200).cookie("jwt", token, { expires: new Date(Date.now() + 60000*10)}).json(user)
+            res.status(200).cookie("jwt", token, { expires: new Date(Date.now() + 60000*10), httpOnly: true}).json(user)
         } else {
             res.status(400).json({ message: "PASSWORD INCORRECT" })
         }
