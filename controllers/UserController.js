@@ -87,8 +87,10 @@ exports.loginUser = async (req, res) => {
         let verifyPassword = await bcrypt.compare(req.body.password, user.password)
         console.log(verifyPassword);
 
+        res.setHeader("X-jwt",token);
+
         if (verifyPassword) {
-            res.status(200).cookie("jwt", token, { expires: new Date(Date.now() + 60000*10), httpOnly: true}).json(user)
+            res.status(200).cookie("jwt", token, { expires: new Date(Date.now() + 60000*10), httpOnly: true }).json(user)
         } else {
             res.status(400).json({ message: "PASSWORD INCORRECT" })
         }

@@ -23,7 +23,8 @@ const server = express();
 
 server.use(cors({
   origin: ["http://localhost:5173", "https://heroic-twilight-9e84af.netlify.app"],
-  credentials: true
+  credentials: true,
+  exposedHeaders: ["X-jwt"]
 }));
 server.use(cookieParser());
 server.use(express.json());
