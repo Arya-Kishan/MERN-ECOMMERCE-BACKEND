@@ -61,8 +61,8 @@ server.post('/create-checkout-session', async (req, res) => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: `http://localhost:5173/orderSuccess`,
-    cancel_url: `http://localhost:5173/orderSuccess`,
+    success_url: `https://heroic-twilight-9e84af.netlify.app/orderSuccess`,
+    cancel_url: `https://heroic-twilight-9e84af.netlify.app/orderSuccess`,
   });
 
   res.json({ id: session.id });
