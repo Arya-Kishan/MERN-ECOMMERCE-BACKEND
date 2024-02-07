@@ -4,7 +4,6 @@ const { checkUser, signoutUser } = require('../controllers/AuthController');
 
 const router = express.Router();
 
-router.get("/checkUserLoggedIn", checkUser)
-    .get("/checkUserLoggedOut", signoutUser)
+router.get("/checkUserSession", checkUser)
 
 module.exports = router;

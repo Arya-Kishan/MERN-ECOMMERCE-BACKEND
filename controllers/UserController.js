@@ -80,17 +80,15 @@ exports.loginUser = async (req, res) => {
     console.log("------------login-------------");
     try {
         const user = await User.findOne({ email: req.body.email })
-        console.log(req?.cookies);
 
         let token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "600000s" });
 
-        let verifyPassword = await bcrypt.compare(req.body.password, user.password)
-        console.log(verifyPassword);
+        res.set("X-jwt-routes", token)
 
-        res.setHeader("X-jwt",token);
+        let verifyPassword = await bcrypt.compare(req.body.password, user.password)
 
         if (verifyPassword) {
-            res.status(200).cookie("jwt", token, { expires: new Date(Date.now() + 60000*10), httpOnly: true }).json(user)
+            res.status(200).json(user)
         } else {
             res.status(400).json({ message: "PASSWORD INCORRECT" })
         }
@@ -117,7 +115,7 @@ exports.resetPasswordRequest = async (req, res) => {
             await user.save();
             console.log("a1");
             const subject = 'RESET YOUR PASSWORD'
-            const html = `<p>Click <a href=${'http://localhost:5173/resetPassword?email=' + ReceiverEmail + '&token=' + token}>here</a> to reset your password</p>`
+            const html = `<p>Click <a href=${'https://heroic-twilight-9e84af.netlify.app/resetPassword?email=' + ReceiverEmail + '&token=' + token}>here</a> to reset your password</p>`
             console.log("a2");
 
             const response = await sendMail(ReceiverEmail, subject, html);
@@ -146,7 +144,7 @@ exports.resetUserPassword = async (req, res) => {
             await user.save();
             const { email } = req.body;
             const subject = 'YOUR PASSWORD CHANGED'
-            const html = `<p>Click <a href=${'http://localhost:5173/login'}>here</a> to login to home</p>`
+            const html = `<p>Click <a href=${'https://heroic-twilight-9e84af.netlify.app/login'}>here</a> to login to home</p>`
 
             const response = await sendMail(email, subject, html);
             res.status(200).json({ data: response, message: "SUCCESS" })

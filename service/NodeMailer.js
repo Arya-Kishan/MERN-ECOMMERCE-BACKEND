@@ -18,7 +18,7 @@ exports.sendMail = async (email, subject, html) => {
   console.log(subject);
 
   const info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <foo@example.com>',
+    from: '"Arya Ecommerce 👻" <foo@example.com>',
     to: email,
     subject: subject,
     text: "Hello world?",

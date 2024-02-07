@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/User');
-const SECRET_KEY = 'SECRET_KEY'
 
 exports.sanitiseUser = (user) => {
     return {
@@ -13,27 +12,22 @@ exports.sanitiseUser = (user) => {
     }
 }
 
-exports.cookieExtractor = (req) => {
-    console.log("---------INSIDE COOKIE EXTRACTOR----------");
-    var token = null;
-    if (req && req.cookies) {
-        token = req.cookies['jwt'];
-    }
-    return token;
-};
+exports.jwtAuthenticateRoutes = async (req, res, next) => {
 
-exports.jwtVerify = async (req, res, next) => {
-    console.log("------------jwt verify-----------");
-    console.log(req?.cookies);
     try {
-        const jwtData = jwt.verify(req?.cookies.jwt, SECRET_KEY)
-        const user = await User.findById(jwtData.id)
+
+        let token = req?.headers?.["jwt-routes"];
+
+        const jwtData = jwt.verify(token, process.env.JWT_SECRET)
+
+        const user = await User.findById(jwtData.userId)
+
         if (user) {
             next()
         } else {
-            res.status(401).json({ message: "ERROR IN JWT AUTHENTICATION" })
+            res.status(401).json({ message: "ERROR IN JWT ROUTES AUTHENTICATION USER NOT FOUND" })
         }
     } catch (error) {
-        res.status(401).json({ message: "ERROR IN JWT VERIFICATION" })
+        res.status(401).json({ message: "ERROR IN JWT ROUETS VERIFICATION" })
     }
 }

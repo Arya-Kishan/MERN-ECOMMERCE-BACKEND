@@ -6,9 +6,10 @@ const jwt = require("jsonwebtoken")
 exports.checkUser = async (req, res) => {
 
     console.log("------- CHECKING USER WITH TOKEN ----------");
+    let token = req.headers?.["jwt-routes"];
     try {
-        if (req.cookies.jwt) {
-            let verfiedUser = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
+        if (req.headers?.["jwt-routes"]) {
+            let verfiedUser = jwt.verify(token, process.env.JWT_SECRET);
             const user = await User.findById(verfiedUser.userId);
             res.status(200).json({ _id: user._id, name: user.name, email: user.email, role: user.role, addresses: user.addresses });
         } else {

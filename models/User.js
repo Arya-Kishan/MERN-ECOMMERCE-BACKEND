@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     role: { type: String, default: 'user' },
     addresses: [Schema.Types.Mixed],
     resetPasswordToken: { type: String, default: '' },
+    jwtToken: { type: String, default: '' },
 })
 
 exports.User = mongoose.model("User", userSchema)
