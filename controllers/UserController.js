@@ -9,6 +9,10 @@ exports.createUser = async (req, res) => {
         let hashPassword = await bcrypt.hash(req.body.password, 10)
         const user = new User({ ...req.body, password: hashPassword });
         const newUser = await user.save();
+        console.log(newUser);
+        let token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: "5hr" });
+
+        res.set("X-jwt-routes", token)
         res.status(200).json(newUser);
     } catch (error) {
         console.log("ERROR IN MAKING NERW USER");
