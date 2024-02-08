@@ -140,7 +140,8 @@ exports.resetUserPassword = async (req, res) => {
         const user = await User.findOne({ email: req.body.email })
 
         if (user.token = req.body.token) {
-            user.password = req.body.password;
+            let hashPassword = await bcrypt.hash(req.body.password, 10)
+            user.password = hashPassword;
             await user.save();
             const { email } = req.body;
             const subject = 'YOUR PASSWORD CHANGED'
