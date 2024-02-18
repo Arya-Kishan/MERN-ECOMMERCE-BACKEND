@@ -85,7 +85,7 @@ exports.loginUser = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email })
 
-        let token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "600000s" });
+        let token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
         res.set("X-jwt-routes", token)
 

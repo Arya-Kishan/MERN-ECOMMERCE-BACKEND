@@ -4,8 +4,6 @@ const { User } = require("../../models/User");
 
 exports.getTotalCount = async (req, res) => {
 
-    console.log("COUNT TOTAL");
-
     try {
 
 

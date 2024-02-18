@@ -118,3 +118,15 @@ exports.getRelatedProducts = async (req, res) => {
         res.status(400).json({ 'message': 'Error in getting RELATED PRODUCT' });
     }
 }
+
+exports.getSearchProduct = async (req, res) => {
+
+    try {
+        const { text } = req.query;
+        const product = await Product.find({ $text : { $search : text }});
+        res.status(200).json(product);
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ 'message': 'Error in Searching by text' });
+    }
+}
