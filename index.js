@@ -14,6 +14,7 @@ const reviewRouter = require("./routes/ProductReviewRoute")
 const wishlistRouter = require("./routes/WishlistRoute")
 const countRouter = require("./routes/CountRoutes")
 const authRouter = require("./routes/AuthRoutes")
+const guestRouter = require("./routes/GuestRoute")
 const path = require("path");
 const bcrypt = require('bcrypt');
 const { jwtAuthenticateRoutes } = require('./service/Common');
@@ -41,6 +42,8 @@ server.use("/brands", jwtAuthenticateRoutes, brandRouter)
 server.use("/review", jwtAuthenticateRoutes, reviewRouter)
 server.use("/wishlist", jwtAuthenticateRoutes, wishlistRouter)
 server.use("/count", jwtAuthenticateRoutes, countRouter)
+server.use("/guest", guestRouter)
+
 // PAYMENT INTEGRATION
 server.post('/create-checkout-session', async (req, res) => {
 

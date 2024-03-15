@@ -1,6 +1,5 @@
 const express = require('express');
 const { getUserById, createUser, updateUserById, deleteUserById, loginUser, resetUserPassword, resetPasswordRequest, getAllUser } = require('../controllers/UserController');
-const passport = require('passport');
 
 const router = express.Router();
 

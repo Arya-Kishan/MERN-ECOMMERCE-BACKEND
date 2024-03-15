@@ -28,6 +28,6 @@ exports.jwtAuthenticateRoutes = async (req, res, next) => {
             res.status(401).json({ message: "ERROR IN JWT ROUTES AUTHENTICATION USER NOT FOUND" })
         }
     } catch (error) {
-        res.status(401).json({ message: "ERROR IN JWT ROUETS VERIFICATION" })
+        res.status(401).json({ message: "ERROR IN JWT ROUTES VERIFICATION" })
     }
 }
